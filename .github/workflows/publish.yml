@@ -3,14 +3,41 @@ name: Build and Publish to PyPI
 on:
   push:
     branches:
-      - main         # Run on every push to main
+      - main
     tags:
-      - "v*"         # Also run when pushing version tags like v0.1.0
+      - "v*"
 
 jobs:
-  build-publish:
-    name: Build & Publish
+  tag-version:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Extract version from pyproject.toml
+        id: get_version
+        run: |
+          VERSION=$(grep -Po '(?<=^version = ")[^"]+' pyproject.toml)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "tag_name=v$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create and push tag
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git tag v$VERSION
+          git push origin v$VERSION
+
+  build-publish:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -24,14 +51,26 @@ jobs:
         run: |
           python -m pip install --upgrade pip build twine
 
-      - name: Build
+      - name: Build package
         run: |
           python -m build
 
+      - name: List build files
+        run: |
+          ls -lh dist
+
       - name: Publish to PyPI
-        if: startsWith(github.ref, 'refs/tags/v')  # Only publish on tag
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
           twine upload dist/*
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          files: |
+            dist/*.tar.gz
+            dist/*.whl
