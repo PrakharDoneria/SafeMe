@@ -3,7 +3,7 @@ from .api import secure_all
 from .core.firewall import setup as firewall
 from .core.ssh import harden as ssh
 from .core.sysctl import apply as sysctl
-from .core.ddos import protect as lavawall
+from .core.ddos import protect as ddos_protect
 from .core.integrity import install as integrity_init, check as integrity_check
 
 app = typer.Typer()
@@ -28,7 +28,7 @@ def apply_sysctl():
 
 @app.command()
 def lavawall():
-    lavawall()
+    ddos_protect()
 
 @app.command()
 def integrity():
