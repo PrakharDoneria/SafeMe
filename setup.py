@@ -7,7 +7,7 @@ long_description = (this_dir / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="SafeMe",
-    version="0.1.0",
+    version="0.1.2",
     description="One-command backend Linux server security: firewall, SSH hardening, DDoS protection, integrity checks and more.",
     long_description=long_description,
     long_description_content_type="text/markdown",
