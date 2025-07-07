@@ -2,27 +2,11 @@
 name = "SafeMe"
 version = "0.1.0"
 description = "One-command backend Linux server security: firewall, SSH hardening, DDoS protection, integrity checks and more."
-authors = [
-    { name = "Prakhar Doneria", email = "prakhardoneria3@gmail.com" }
-]
+authors = [{ name = "Prakhar Doneria", email = "prakhardoneria3@gmail.com" }]
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.7"
-dependencies = [
-    "typer[all]"
-]
-
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Developers",
-    "Intended Audience :: System Administrators",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: POSIX :: Linux",
-    "Programming Language :: Python :: 3",
-    "Topic :: Security",
-    "Topic :: System :: Systems Administration",
-    "Typing :: Typed"
-]
+dependencies = ["typer[all]"]
 
 [project.urls]
 Homepage = "https://github.com/prakhardoneria/safeme"
