@@ -2,8 +2,10 @@ name: Build and Publish to PyPI
 
 on:
   push:
+    branches:
+      - main         # Run on every push to main
     tags:
-      - "v*"
+      - "v*"         # Also run when pushing version tags like v0.1.0
 
 jobs:
   build-publish:
@@ -27,6 +29,7 @@ jobs:
           python -m build
 
       - name: Publish to PyPI
+        if: startsWith(github.ref, 'refs/tags/v')  # Only publish on tag
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
