@@ -1,16 +1,14 @@
-name: Publish to PyPI
+name: Build and Publish to PyPI
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version for release (optional, for logging)'
-        required: false
-        type: string
+  push:
+    tags:
+      - "v*"
 
 jobs:
   build-publish:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -20,23 +18,13 @@ jobs:
           python-version: "3.11"
 
       - name: Install build tools
-        run: python -m pip install --upgrade pip setuptools wheel twine
+        run: python -m pip install --upgrade setuptools wheel twine
 
-      - name: Build distributions
+      - name: Build package
         run: python setup.py sdist bdist_wheel
-
-      - name: List dist files
-        run: ls -lh dist
 
       - name: Publish to PyPI
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: twine upload dist/*
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.event.inputs.version || github.run_id }}
-          name: Release ${{ github.event.inputs.version || github.run_id }}
-          files: dist/*.tar.gz dist/*.whl
