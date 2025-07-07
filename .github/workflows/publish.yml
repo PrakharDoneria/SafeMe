@@ -26,11 +26,14 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "tag_name=v$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Create and push tag
+      - name: Push tag with PAT
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git tag v$VERSION
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}
           git push origin v$VERSION
 
   build-publish:
