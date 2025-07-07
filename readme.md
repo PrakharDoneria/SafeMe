@@ -9,8 +9,6 @@
 [![UPI](https://img.shields.io/badge/UPI-009688?style=for-the-badge&logo=upi&logoColor=white)](upi://pay?pa=prakhardoneria@upi&pn=Prakhar%20Doneria)
 [![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/prakhardoneria)
 
-<iframe src="https://github.com/sponsors/PrakharDoneria/card" title="Sponsor Prakhar Doneria" height="225" width="600" style="border: 0;"></iframe>
-
 ## ✅ Features
 
 * 🔐 Harden SSH server (disables root login and password-based auth)
