@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from pathlib import Path
 
 this_dir = Path(__file__).parent
-long_description = (this_dir / "README.md").read_text(encoding="utf-8")
+long_description = (this_dir / "readme.md").read_text(encoding="utf-8")
 
 setup(
     name="SafeMe",
