@@ -1,13 +1,12 @@
 from setuptools import setup, find_packages
 from pathlib import Path
 
-# Read the long description from README.md
 this_dir = Path(__file__).parent
 long_description = (this_dir / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="SafeMe",
-    version="0.1.2",
+    version="0.1.3",
     description="One-command backend Linux server security: firewall, SSH hardening, DDoS protection, integrity checks and more.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -21,7 +20,6 @@ setup(
     },
     license="MIT",
     packages=find_packages(),
-    include_package_data=True,
     python_requires=">=3.7",
     install_requires=[
         "typer[all]",
@@ -32,12 +30,8 @@ setup(
         ],
     },
     classifiers=[
-        "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: Linux",
-        "Topic :: Security",
-        "Topic :: System :: Systems Administration",
-        "Environment :: Console",
     ],
 )
